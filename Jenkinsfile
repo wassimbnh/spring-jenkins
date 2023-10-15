@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        // Define environment variables here, if needed
-        DOCKER_IMAGE_NAME = "devops_project-spring-app "
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -13,17 +8,27 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                sh 'mvn clean package' // Modify the build command for your specific project
-            }
-        }
-
-        stage('Test') {
+    stage('Test') {
             steps {
                 sh 'mvn test'
             }
         }
+
+        stage('Docker Compose Up') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'  
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package' 
+            }
+        }
+
+        
 
         stage('Docker Build') {
             steps {
@@ -32,5 +37,5 @@ pipeline {
                 }
             }
         }
-        }
     }
+}
