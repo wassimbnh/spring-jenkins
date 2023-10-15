@@ -50,7 +50,7 @@ pipeline {
                     
                     // Push the Docker image to Docker Hub
                     sh "docker tag ${imageName}:${imageVersion} $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
-                    sh "docker push ${imageName}:${imageVersion}"
+                    sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                 }
             }
         }
