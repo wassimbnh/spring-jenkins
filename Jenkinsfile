@@ -41,7 +41,7 @@ pipeline {
             
             def imageName = "spring-jenkins"
             def imageVersion = "1.0"
-            def registryUrl = "https://hub.docker.com/repository/docker/wassim158/spring-jenkins/"  
+            def registryUrl = "https://hub.docker.com/repository/docker/wassim158"  
 
             // Login to the container registry
             sh "docker login -u wassim158 -p Wassim1122? ${registryUrl}"
