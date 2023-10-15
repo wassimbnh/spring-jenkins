@@ -1,9 +1,10 @@
 pipeline {
     agent any
 
-        environment {
-             DOCKERHUB_CREDENTIAL = credentials('dockerhub-spring-jenkins')
-        }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub-spring-jenkins')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -36,17 +37,19 @@ pipeline {
         }
 
         stage('Login Dockerhub') {
-           steps {
-             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-   }
-        stage(Push image'){
-              steps{
-                  sh 'docker push spring-jenkins'
-              }
-              }
-              
-}
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
 
+        stage('Push Image') {
+            steps {
+                script {
+                    def imageName = "spring-jenkins"
+                    def imageVersion = "1.0"
+                    sh "docker push ${imageName}:${imageVersion}"
+                }
+            }
+        }
     }
 }
