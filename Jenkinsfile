@@ -47,7 +47,7 @@ pipeline {
                 script {
                     def imageName = "spring-jenkins"
                     def imageVersion = "1.0"
-                    sh "docker push ${imageName}:${imageVersion}"
+                    sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                 }
             }
         }
