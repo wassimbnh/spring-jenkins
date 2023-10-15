@@ -1,22 +1,37 @@
 pipeline {
     agent any
 
+    environment {
+        // Define environment variables here, if needed
+        DOCKER_IMAGE_NAME = "devops_project-spring-app "
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                // Étape de récupération du code source depuis le référentiel Git
                 checkout scm
             }
         }
 
-        stage('Display System Date') {
+        stage('Build') {
             steps {
-                // Étape d'affichage de la date système
+                sh 'mvn clean package' // Modify the build command for your specific project
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Docker Build') {
+            steps {
                 script {
-                    def currentDate = sh(script: 'date', returnStdout: true).trim()
-                    echo "La date système est : ${currentDate}"
+                    def dockerImage = docker.build(env.DOCKER_IMAGE_NAME, "--file Dockerfile .")
                 }
             }
+        }
         }
     }
 }
