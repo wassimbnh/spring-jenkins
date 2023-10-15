@@ -22,14 +22,19 @@ pipeline {
             }
         }
 
-        
-        stage('Docker Compose Up') {
-            steps {
-                script {
-                    sh 'docker-compose up -d'  
-                }
-            }
+        stage('Build Docker Image') {
+    steps {
+        script {
+            // Define variables for the Docker image name and version
+            def imageName = "spring-jenkins"
+            def imageVersion = "1.0"
+
+            // Build the Docker image
+            sh "docker build -t ${imageName}:${imageVersion} ."
         }
+    }
+}
+
 
     
     }
