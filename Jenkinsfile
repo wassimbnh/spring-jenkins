@@ -35,25 +35,10 @@ pipeline {
     }
 }
 
-        stage('Push Docker Image') {
-    steps {
-        script {
-            
-            def imageName = "spring-jenkins"
-            def imageVersion = "1.0"
-            def registryUrl = "https://hub.docker.com"  
-
-            // Login to the container registry
-            sh "docker login -u wassim158 -p Wassim1122? ${registryUrl}"
-
-            // Tag the image for the registry
-            sh "docker tag ${imageName}:${imageVersion} ${registryUrl}/${imageName}:${imageVersion}"
-
-            // Push the image to the registry
-            sh "docker push ${registryUrl}/${imageName}:${imageVersion}"
-        }
-    }
-}
+        stage('Login Dockerhub') {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
 
 
 
