@@ -49,7 +49,7 @@ pipeline {
                     def imageVersion = "1.0"
                     
                     // Push the Docker image to Docker Hub
-                    sh "docker tag imageName:latest $DOCKERHUB_CREDENTIALS_USR/imageName:latest"
+                    sh "docker tag imageName:latest $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                     sh "docker push ${imageName}:${imageVersion}"
                 }
             }
