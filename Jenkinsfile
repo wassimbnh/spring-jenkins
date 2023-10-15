@@ -2,8 +2,7 @@ pipeline {
     agent any
 
         environment {
-             DOCKERHUB_USERNAME = "wassim158"
-             DOCKERHUB_CREDENTIALS_PSW = "Wassim1122?"
+             DOCKERHUB_CREDENTIAL = credentials('dockerhub-spring-jenkins')
         }
     stages {
         stage('Checkout') {
@@ -38,10 +37,15 @@ pipeline {
 
         stage('Login Dockerhub') {
            steps {
-              withCredentials([usernamePassword(credentialsId: 'dckr_pat_TutLDlHsMsYOkaa-u9AS9-OcvLQ', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW')]) {
-              sh 'docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_CREDENTIALS_PSW'
+             sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
       }
    }
+        stage(Push image'){
+              steps{
+                  sh 'docker push spring-jenkins'
+              }
+              }
+              
 }
 
     }
