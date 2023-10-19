@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     def scannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    withSonarQubeEnv('spring-jenkins') {
+                    withSonarQubeEnv('sonar-jenkins') {
                         sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
