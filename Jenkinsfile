@@ -18,6 +18,17 @@ pipeline {
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv('spring-jenkins') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 sh 'mvn clean install'
@@ -29,8 +40,6 @@ pipeline {
                 script {
                     def imageName = "spring-jenkins"
                     def imageVersion = "1.0"
-
-                    // Build the Docker image
                     sh "docker build -t ${imageName}:${imageVersion} ."
                 }
             }
@@ -47,8 +56,6 @@ pipeline {
                 script {
                     def imageName = "spring-jenkins"
                     def imageVersion = "1.0"
-                    
-                    // Push the Docker image to Docker Hub
                     sh "docker tag ${imageName}:${imageVersion} $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                     sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                 }
