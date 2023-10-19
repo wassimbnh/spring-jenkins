@@ -20,11 +20,8 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    def scannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    withSonarQubeEnv('sonar-jenkins') {
-                        sh "${scannerHome}/bin/sonar-scanner"
-                    }
+                withSonarQubeEnv(installationName: 'spring-jenkins'){
+                    sh './mvnw cleam org.sonarsource.scanner.maven:sonar-maven-pligin:3.9.9.2155.sonar'
                 }
             }
         }
