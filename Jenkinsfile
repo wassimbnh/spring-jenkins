@@ -36,7 +36,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def imageName = "spring-jenkins"
+                    def imageName = "devops-project"
                     def imageVersion = "1.0"
                     sh "docker build -t ${imageName}:${imageVersion} ."
                 }
@@ -52,7 +52,7 @@ pipeline {
         stage('Push Image') {
             steps {
                 script {
-                    def imageName = "spring-jenkins"
+                    def imageName = "devops-project"
                     def imageVersion = "1.0"
                     sh "docker tag ${imageName}:${imageVersion} $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                     sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
