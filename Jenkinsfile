@@ -26,13 +26,11 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                script {
-                    def scannerHome = tool name: 'SonarQube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-                    withSonarQubeEnv('jenkins-sonar') {
-                        sh "${scannerHome}/bin/sonar-scanner"
+                
+                    withSonarQubeEnv('sonar-jenkins') {
+                        sh "mvn sonar:sonar"
                     }
                 }
-            }
         }
 
         stage('Build Docker Image') {
