@@ -18,21 +18,20 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-    steps {
-        script {
-            def scannerHome = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-            withSonarQubeEnv('jenkins-sonar') {
-                sh "./mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.10.0.2594:sonar"
-            }
-        }
-    }
-}
-
-
         stage('Build') {
             steps {
                 sh 'mvn clean install'
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = tool name: 'SonarQube', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+                    withSonarQubeEnv('jenkins-sonar') {
+                        sh "${scannerHome}/bin/sonar-scanner"
+                    }
+                }
             }
         }
 
