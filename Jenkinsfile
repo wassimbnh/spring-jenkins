@@ -7,7 +7,7 @@ pipeline {
         NEXUS_PROTOCOL = "http"
         NEXUS_URL = "http://192.168.33.10:8081"
         NEXUS_REPOSITORY = "devopsproject"
-        NEXUS_CREDENTIAL = "nexusCredential"
+        NEXUS_CREDENTIALS = "nexusCredential"
         ARTIFACT_VERSION = "${BUILD_NUMBER}"
     }
 
@@ -91,10 +91,10 @@ pipeline {
                             groupId: pom.groupId,
                             version: ARTIFACT_VERSION,
                             repository: NEXUS_REPOSITORY,
-                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            credentialsId: NEXUS_CREDENTIALS,
                             artifacts: [
                                 // Artifact generated such as .jar, .ear and .war files.
-                                [artifactId: pom.artifactId,
+                                [artifactId: devopsproject,
                                 classifier: '',
                                 file: artifactPath,
                                 type: pom.packaging]
