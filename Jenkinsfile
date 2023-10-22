@@ -60,6 +60,19 @@ pipeline {
                 }
             }
         }*/
+
+    stage('Deploy to Nexus') {
+         steps {
+           script {
+            // Set up Maven settings
+            def mavenSettings = readFile("${WORKSPACE}/settings.xml")
+            
+            // Deploy Maven artifacts to Nexus
+            sh "mvn deploy -s ${mavenSettings}"
+        }
+    }
+}
+
     }
 
     post {
