@@ -31,23 +31,25 @@ pipeline {
             }
         }
 
-        stage("Publish to Nexus") {
+         stage("Publish to Nexus") {
             steps {
                 script {
-                    def version = ARTIFACT_VERSION
+                    def version = env.ARTIFACT_VERSION
                     nexusArtifactUploader(
-                        nexusVersion: NEXUS_VERSION,
-                        protocol: NEXUS_PROTOCOL,
-                        nexusUrl: NEXUS_URL,
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: env.NEXUS_URL,
                         groupId: 'tn.esprit',
                         version: version,
-                        repository: NEXUS_REPOSITORY,
-                        credentialsId: NEXUS_CREDENTIALS,
+                        repository: env.NEXUS_REPOSITORY,
+                        credentialsId: env.NEXUS_CREDENTIALS,
                         artifacts: [
-                            [artifactId: 'spring-jenkins',
-                             classifier: '',
-                             file: "target/my-service-${version}.jar",
-                             type: 'jar']
+                            [
+                                artifactId: 'spring-jenkins',
+                                classifier: '',
+                                file: "target/my-service-${version}.jar",
+                                type: 'jar'
+                            ]
                         ]
                     )
                 }
