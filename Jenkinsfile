@@ -3,13 +3,11 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-spring-jenkins')
-        NEXUS_VERSION = "nexus3"
-        NEXUS_USER = "admin"
+         NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = "http://192.168.33.10:8081"
+        NEXUS_URL = " 192.168.33.10:8081/"
         NEXUS_REPOSITORY = "devopsproject"
-        NEXUS_CREDENTIALS = 'nexusCredential'
-        ARTIFACT_VERSION = "${BUILD_NUMBER}"
+        NEXUS_CREDENTIAL_ID = "nexusCredential"
     }
 
     stages {
@@ -27,7 +25,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean package'
             }
         }
 
@@ -68,31 +66,43 @@ pipeline {
             }
         }*/
 
-         stage("Publish to Nexus") {
+          stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
-                    def version = env.ARTIFACT_VERSION
-                    nexusArtifactUploader(
-                        nexusVersion: 'nexus3',
-                        protocol: 'http',
-                        nexusUrl: env.NEXUS_URL,
-                        groupId: 'tn.esprit',
-                        version: version,
-                        repository: env.NEXUS_REPOSITORY,
-                        credentialsId: env.NEXUS_CREDENTIALS,
-                        artifacts: [
-                            [
-                                artifactId: 'spring-jenkins',
+                    pom = readMavenPom file: "pom.xml";
+                    filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
+                    echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
+                    artifactPath = filesByGlob[0].path;
+                    artifactExists = fileExists artifactPath;
+                    if(artifactExists) {
+                        echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                        nexusArtifactUploader(
+                            nexusVersion: NEXUS_VERSION,
+                            protocol: NEXUS_PROTOCOL,
+                            nexusUrl: NEXUS_URL,
+                            groupId: pom.groupId,
+                            version: pom.version,
+                            repository: NEXUS_REPOSITORY,
+                            credentialsId: NEXUS_CREDENTIAL_ID,
+                            artifacts: [
+                                [artifactId: pom.artifactId,
                                 classifier: '',
-                                file: "target/my-service-${version}.jar",
-                                type: 'jar'
+                                file: artifactPath,
+                                type: pom.packaging],
+                                [artifactId: pom.artifactId,
+                                classifier: '',
+                                file: "pom.xml",
+                                type: "pom"]
                             ]
-                        ]
-                    )
+                        );
+                    } else {
+                        error "*** File: ${artifactPath}, could not be found";
+                    }
                 }
             }
         }
     }
+    
 
     post {
         always {
