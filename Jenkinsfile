@@ -5,7 +5,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-spring-jenkins')
          NEXUS_VERSION = "nexus3"
         NEXUS_PROTOCOL = "http"
-        NEXUS_URL = " 192.168.33.10:8081/"
+        NEXUS_URL = "192.168.33.10:8081"
         NEXUS_REPOSITORY = "devopsproject"
         NEXUS_CREDENTIAL_ID = "nexusCredential"
     }
