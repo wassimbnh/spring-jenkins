@@ -31,6 +31,31 @@ pipeline {
             }
         }
 
+        /*stage('SonarQube Analysis') {
+            steps {
+                
+                    withSonarQubeEnv('sonarqube') {
+                        sh "mvn sonar:sonar"
+                    }
+                }
+        }*/
+
+        /*stage('Build Docker Image') {
+            steps {
+	@@ -49,7 +50,7 @@ pipeline {
+            }
+        }*/
+
+         /*stage('Push Image') {
+            steps {
+                script {
+                    def imageName = "devops-project"
+	@@ -58,7 +59,7 @@ pipeline {
+                    sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
+                }
+            }
+        }*/
+
          stage("Publish to Nexus") {
             steps {
                 script {
