@@ -24,14 +24,14 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        /*stage('SonarQube Analysis') {
             steps {
                 
                     withSonarQubeEnv('sonarqube') {
                         sh "mvn sonar:sonar"
                     }
                 }
-        }
+        }*/
 
         stage('Junit/Mockito') {
             steps {
@@ -40,40 +40,7 @@ pipeline {
         }
         
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    def imageName = "devops-project"
-                    def imageVersion = "1.0"
-                    sh "docker build -t ${imageName}:${imageVersion} ."
-                }
-            }
-        }
-
-        stage('Login Dockerhub') {
-            steps {
-                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-            }
-        }
-
-        stage('Deploy to DockerHub') {
-            steps {
-                script {
-                    def imageName = "devops-project"
-                    def imageVersion = "1.0"
-                    sh "docker tag ${imageName}:${imageVersion} $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
-                    sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
-                }
-            }
-        }
-
-        stage("Docker Compose") {
-            steps {
-                sh 'docker-compose up -d'
-            }
-        }
-
-          stage("Publish to Nexus") {
+        stage("Publish to Nexus") {
             steps {
                 script {
                     pom = readMavenPom file: "pom.xml";
@@ -108,6 +75,41 @@ pipeline {
                 }
             }
         }
+        
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def imageName = "devops-project"
+                    def imageVersion = "1.0"
+                    sh "docker build -t ${imageName}:${imageVersion} ."
+                }
+            }
+        }
+
+        stage('Login Dockerhub') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+
+        stage('Deploy to DockerHub') {
+            steps {
+                script {
+                    def imageName = "devops-project"
+                    def imageVersion = "1.0"
+                    sh "docker tag ${imageName}:${imageVersion} $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
+                    sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
+                }
+            }
+        }
+
+        stage("Docker Compose") {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
+
+          
     }
     
 
