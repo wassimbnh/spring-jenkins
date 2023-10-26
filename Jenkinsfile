@@ -17,11 +17,6 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
 
         stage('Build') {
             steps {
@@ -29,17 +24,23 @@ pipeline {
             }
         }
 
-        /*stage('SonarQube Analysis') {
+        stage('SonarQube Analysis') {
             steps {
                 
                     withSonarQubeEnv('sonarqube') {
                         sh "mvn sonar:sonar"
                     }
                 }
-        }*/
+        }
+
+        stage('Junit/Mockito') {
+            steps {
+                sh 'mvn test'
+            }
+        }
         
 
-        /*stage('Build Docker Image') {
+        stage('Build Docker Image') {
             steps {
                 script {
                     def imageName = "devops-project"
@@ -47,13 +48,13 @@ pipeline {
                     sh "docker build -t ${imageName}:${imageVersion} ."
                 }
             }
-        }*/
+        }
 
-       /* stage('Login Dockerhub') {
+        stage('Login Dockerhub') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
-        }*/
+        }
 
         /*stage('Push Image') {
             steps {
@@ -66,7 +67,7 @@ pipeline {
             }
         }*/
 
-          stage("Publish to Nexus Repository Manager") {
+          /*stage("Publish to Nexus") {
             steps {
                 script {
                     pom = readMavenPom file: "pom.xml";
@@ -100,7 +101,7 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
     }
     
 
