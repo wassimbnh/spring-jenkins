@@ -2,7 +2,7 @@ version: '3'
 
 services:
   # Spring Boot application service
-  spring-app:
+  devops-project:
     build:
       context: .
       dockerfile: Dockerfile
