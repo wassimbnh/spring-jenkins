@@ -92,7 +92,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to DockerHub') {
+       /* stage('Deploy to DockerHub') {
             steps {
                 script {
                     def imageName = "devops-project"
@@ -101,7 +101,7 @@ pipeline {
                     sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                 }
             }
-        }
+        }*/
 
         stage("Docker Compose") {
             steps {
