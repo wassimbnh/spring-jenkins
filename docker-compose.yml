@@ -18,7 +18,7 @@ services:
   # MySQL service
   mysql:
     image: mysql
-    container_name: mysqldb
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: devops
