@@ -81,13 +81,13 @@ pipeline {
             }
         }
 
-        /*stage('Login Dockerhub') {
+        stage('Login Dockerhub') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
         }
 
-        stage('Deploy to DockerHub') {
+        /*stage('Deploy to DockerHub') {
             steps {
                 script {
                     def imageName = "devops-project"
