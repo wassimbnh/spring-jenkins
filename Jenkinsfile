@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+       /* stage('SonarQube Analysis') {
             steps {
                 
                     withSonarQubeEnv('sonarqube') {
@@ -69,7 +69,7 @@ pipeline {
                     }
                 }
             }
-        }
+        } */
         
         stage('Build Docker Image') {
             steps {
@@ -81,7 +81,7 @@ pipeline {
             }
         }
 
-        stage('Login Dockerhub') {
+        /*stage('Login Dockerhub') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
             }
@@ -96,7 +96,7 @@ pipeline {
                     sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                 }
             }
-        }
+        }*/
 
         stage("Docker Compose") {
             steps {
