@@ -58,7 +58,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 		invoice.setArchived(true);
 		invoiceRepository.save(invoice);
 		//method 02 (Avec JPQL)
-		invoiceRepository.updateInvoice(invoiceId);
+		//invoiceRepository.updateInvoice(invoiceId);
 	}
 
 	@Override
