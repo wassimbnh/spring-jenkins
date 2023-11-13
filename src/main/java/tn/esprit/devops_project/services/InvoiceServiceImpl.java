@@ -31,6 +31,26 @@ public class InvoiceServiceImpl implements IInvoiceService {
 	public List<Invoice> retrieveAllInvoices() {
 		return invoiceRepository.findAll();
 	}
+
+	@Override
+	public Invoice addInvoice(Invoice invoice){ return  invoiceRepository.save(invoice);}
+
+	@Override
+	public  void  updateInvoice(Long idInvoice, Invoice invoice){
+		Invoice inv = invoiceRepository.findById(idInvoice).orElse(null);
+		inv.setAmountInvoice(invoice.getAmountInvoice());
+		inv.setAmountDiscount(invoice.getAmountDiscount());
+		inv.setDateCreationInvoice(invoice.getDateCreationInvoice());
+		inv.setArchived(invoice.getArchived());
+		inv.setDateLastModificationInvoice((invoice.getDateLastModificationInvoice()));
+
+		invoiceRepository.save(inv);
+	}
+
+	@Override
+	public void deleteInvoice(Long invoiceId){
+		invoiceRepository.deleteById(invoiceId);
+	}
 	@Override
 	public void cancelInvoice(Long invoiceId) {
 		// method 01

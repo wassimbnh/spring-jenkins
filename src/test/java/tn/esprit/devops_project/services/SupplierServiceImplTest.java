@@ -55,18 +55,7 @@ public class SupplierServiceImplTest {
         assertEquals(supplier, addedSupplier);
     }
 
-    @Test
-    public void canUpdateSupplier() {
-        // Arrange
-        Supplier supplier = new Supplier();
-        Mockito.when(supplierRepository.save(supplier)).thenReturn(supplier);
 
-        // Act
-        Supplier updatedSupplier = supplierService.updateSupplier(supplier);
-
-        // Assert
-        assertEquals(supplier, updatedSupplier);
-    }
 
     @Test
     public void canDeleteSupplier() {

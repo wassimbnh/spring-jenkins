@@ -20,9 +20,22 @@ public class InvoiceController {
        return invoiceService.retrieveAllInvoices();
     }
 
+    @PostMapping("/invoice")
+    public  Invoice addInvoice(@RequestBody Invoice invoice){ return  invoiceService.addInvoice(invoice);}
+
     @GetMapping("/invoice/{invoiceId}")
     public Invoice retrieveInvoice(@PathVariable Long invoiceId) {
         return invoiceService.retrieveInvoice(invoiceId);
+    }
+
+    @PutMapping("/invoice/update/{invoiceId}")
+    public void updateInvoice(@PathVariable Long invoiceId, @RequestBody Invoice invoice) {
+        invoiceService.updateInvoice(invoiceId, invoice);
+    }
+
+    @DeleteMapping("/invoice/delete/{invoiceId}")
+    public void deleteInvoice(@PathVariable Long invoiceId){
+        invoiceService.deleteInvoice(invoiceId);
     }
 
     @PutMapping("/invoice/{invoiceId}")

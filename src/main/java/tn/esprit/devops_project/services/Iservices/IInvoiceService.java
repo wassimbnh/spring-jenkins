@@ -17,4 +17,10 @@ public interface IInvoiceService {
 	void assignOperatorToInvoice(Long idOperator, Long idInvoice);
 
 	float getTotalAmountInvoiceBetweenDates(Date startDate, Date endDate);
+
+	void updateInvoice(Long invoiceId, Invoice invoice);
+
+	void deleteInvoice(Long invoiceId);
+
+	Invoice addInvoice(Invoice invoice);
 }

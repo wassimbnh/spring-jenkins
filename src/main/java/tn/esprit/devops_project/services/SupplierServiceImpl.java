@@ -29,10 +29,13 @@ public class SupplierServiceImpl implements ISupplierService {
 	}
 
 	@Override
-	public Supplier updateSupplier(Supplier supplier) {
-		return  supplierRepository.save(supplier);
+	public Supplier updateSupplier(Supplier supplier, Long idSupplier) {
+		Supplier sp = supplierRepository.findById(idSupplier).orElse(null);
+		sp.setCode(supplier.getCode());
+		sp.setLabel(supplier.getLabel());
+		sp.setSupplierCategory(supplier.getSupplierCategory());
+		return  supplierRepository.save(sp);
 	}
-
 	@Override
 	public void deleteSupplier(Long SupplierId) {
 		supplierRepository.deleteById(SupplierId);
