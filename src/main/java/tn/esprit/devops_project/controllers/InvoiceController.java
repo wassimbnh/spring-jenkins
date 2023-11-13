@@ -20,7 +20,7 @@ public class InvoiceController {
        return invoiceService.retrieveAllInvoices();
     }
 
-    @PostMapping("/invoice")
+    @PostMapping("/add-invoice")
     public  Invoice addInvoice(@RequestBody Invoice invoice){ return  invoiceService.addInvoice(invoice);}
 
     @GetMapping("/invoice/{invoiceId}")
