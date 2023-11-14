@@ -18,7 +18,6 @@ import javax.persistence.Table;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "InvoiceDetail")
 public class InvoiceDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id

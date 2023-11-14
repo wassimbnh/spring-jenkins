@@ -21,7 +21,6 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "Operator")
 public class Operator implements Serializable{
 	private static final long serialVersionUID = 1L;
 
