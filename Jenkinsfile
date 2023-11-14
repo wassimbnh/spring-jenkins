@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-       /* stage('SonarQube Analysis') {
+       stage('SonarQube Analysis') {
             steps {
                 
                     withSonarQubeEnv('sonarqube') {
@@ -69,7 +69,7 @@ pipeline {
                     }
                 }
             }
-        } */
+        }
         
         stage('Build Docker Image') {
             steps {
@@ -87,7 +87,7 @@ pipeline {
             }
         }
 
-        /*stage('Deploy to DockerHub') {
+        stage('Deploy to DockerHub') {
             steps {
                 script {
                     def imageName = "devops-project"
@@ -96,7 +96,7 @@ pipeline {
                     sh "docker push $DOCKERHUB_CREDENTIALS_USR/${imageName}:${imageVersion}"
                 }
             }
-        }*/
+        }
 
         stage("Docker Compose") {
             steps {
