@@ -6,12 +6,15 @@ import tn.esprit.devops_project.entities.Supplier;
 import tn.esprit.devops_project.services.Iservices.ISupplierService;
 import java.util.List;
 
+@CrossOrigin(maxAge = 3600)
 
 @RestController
 @AllArgsConstructor
 public class SupplierController {
 
 	ISupplierService supplierService;
+
+	@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
 
 	@GetMapping("/supplier")
 	public List<Supplier> getSuppliers() {

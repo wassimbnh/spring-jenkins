@@ -8,12 +8,15 @@ import tn.esprit.devops_project.services.Iservices.IInvoiceService;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin(maxAge = 3600)
 
 @RestController
 @AllArgsConstructor
 public class InvoiceController {
 
     IInvoiceService invoiceService;
+
+    @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "Requestor-Type", exposedHeaders = "X-Get-Header")
 
     @GetMapping("/invoice")
     public List<Invoice> getInvoices() {
